@@ -14,11 +14,11 @@ $(document).ready(function() {
         
         // Preenche o formulário de edição com os dados do cliente
         $("#novonome").val(clienteEditando.find(".nome").text());
-        $("#novotelefone").val(clienteEditando.find(".telefone").val());
-        $("#novoendereco").val(clienteEditando.find(".endereco").val());
-        $("#novovalor").val(clienteEditando.find(".valor").val());
-        $("#novotaxa").val(clienteEditando.find(".juros").val());
-        $("#novoparcelas").val(clienteEditando.find(".qtdparcelas").val());
+        $("#novotelefone").val(clienteEditando.find(".telefone").text());
+        $("#novoendereco").val(clienteEditando.find(".endereco").text());
+        $("#novovalor").val(clienteEditando.find(".valor").text());
+        $("#novotaxa").val(clienteEditando.find(".juros").text());
+        $("#novoparcelas").val(clienteEditando.find(".qtdparcelas").text());
 
         // Mostra o formulário de edição
         $("#alteracao").show();
@@ -92,9 +92,10 @@ $(document).ready(function() {
         const cliente = {
             nome: $("#adnome").val(),
             telefone: $("#adtelefone").val(),
+            comercio: $("#comercio").val(),
             endereco: $("#adendereco").val(),
             valor: parseFloat($("#advalor").val()),
-            juros: parseFloat($("#adtaxa").val().replace("%", "")), // Remover o "%" para obter o valor numérico
+            juros: parseFloat($("#adtaxa").val()), 
             parcelas: parseInt($("#adparcelas").val())
         };
 
@@ -107,26 +108,30 @@ $(document).ready(function() {
 
         // Adicionar elementos HTML com base nos dados do cliente
         $("<h2>").text(cliente.nome).addClass("nome").appendTo(novoCliente);
-        $("<label>").text("Telefone").addClass("telefone").appendTo(novoCliente);
-        $("<input>").val(cliente.telefone).addClass("telefone").appendTo(novoCliente);
 
-        $("<label>").text("Endereço").addClass("endereco").appendTo(novoCliente);
-        $("<input>").val(cliente.endereco).addClass("endereco").appendTo(novoCliente);
+        $("<p>").text("Endereço:  " + cliente.endereco).addClass("endereco").appendTo(novoCliente);
 
-        $("<label>").text("Valor Emprestado").addClass("valor").appendTo(novoCliente);
-        $("<input>").val(cliente.valor).addClass("valor").appendTo(novoCliente);
 
-        $("<label>").text("Total a Pagar").addClass("valortotal").appendTo(novoCliente);
-        $("<input>").val(valorTotal.toFixed(2)).addClass("valortotal").appendTo(novoCliente);
+        $("<p>").text("Tipo de comércio:  " + cliente.comercio).addClass("tipocomercio").appendTo(novoCliente);
 
-        $("<label>").text("Valor da Parcela").addClass("parcela").appendTo(novoCliente);
-        $("<input>").val(valorParcela.toFixed(2)).addClass("parcela").appendTo(novoCliente);
 
-        $("<label>").text("Número de Parcelas").addClass("qtdparcelas").appendTo(novoCliente);
-        $("<input>").val(cliente.parcelas).addClass("qtdparcelas").appendTo(novoCliente);
+        $("<p>").text("Telefone: " + cliente.telefone).addClass("telefone").appendTo(novoCliente);
+    
 
-        $("<label>").text("Taxa de Juros").addClass("juros").appendTo(novoCliente);
-        $("<input>").val(cliente.juros + "%").addClass("juros").appendTo(novoCliente);
+        $("<p>").text("Valor Emprestado:  " + cliente.valor).addClass("valor").appendTo(novoCliente);
+       
+
+        $("<p>").text("Valor da Parcela:  " + (valorParcela.toFixed(2))).addClass("parcela").appendTo(novoCliente);
+
+        
+        $("<p>").text("Número de Parcelas:  " + cliente.parcelas).addClass("numeroparcelas").appendTo(novoCliente);
+
+
+        $("<p>").text("Taxa de Juros:  " + cliente.juros + "%").addClass("juros").appendTo(novoCliente);
+
+
+        $("<p>").text("Total a Pagar:  " + valorTotal.toFixed(2)).addClass("total").appendTo(novoCliente);
+
 
         $("<button>").text("Editar cliente").addClass("editar").appendTo(novoCliente);
 

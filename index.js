@@ -5,6 +5,32 @@ $(document).ready(function() {
         $("#form-adiciona").toggle();
     });
 
+
+    $("body").on("click", ".pagamento", function() {
+
+        $("#retirada").show();
+
+    });
+
+    $("#retirar").click(retirar);
+
+    function retirar(){
+
+        let clienteretirando = $(this).closest(".cliente");
+
+        let parcelasPagas = $("#pagamentos").parseInt($("#pagamentos").val()) 
+        let parcelaAtual = clienteretirando.find(".valorparcela").text()
+        let numeroDeParcelasAtual = clienteretirando.find(".numeroparcelas").text()
+        let totalatual = clienteEditando.find(".total").text()
+
+        let novonumerodeparcelas = parcelasPagas - numeroDeParcelasAtual
+        let  valorTotalAPagar = novonumerode
+
+    }
+
+
+
+
     let clienteEditando = null; // Variável para armazenar o cliente sendo editado
 
     // Evento para mostrar o formulário de edição ao clicar no botão "Editar Cliente"
@@ -53,12 +79,6 @@ $(document).ready(function() {
         $("#alteracao").hide();
         //colocar cada um no seu lugar com as alterações
     });
-
-    
-
-
-    
-
     
   
     $("#adcliente").click(function(event) {
@@ -121,7 +141,7 @@ $(document).ready(function() {
         $("<p>").text("Valor Emprestado:  " + cliente.valor).addClass("valor").appendTo(novoCliente);
        
 
-        $("<p>").text("Valor da Parcela:  " + (valorParcela.toFixed(2))).addClass("parcela").appendTo(novoCliente);
+        $("<p>").text("Valor da Parcela:  " + (valorParcela.toFixed(2))).addClass("valorparcela").appendTo(novoCliente);
 
         
         $("<p>").text("Número de Parcelas:  " + cliente.parcelas).addClass("numeroparcelas").appendTo(novoCliente);

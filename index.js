@@ -5,28 +5,44 @@ $(document).ready(function() {
         $("#form-adiciona").toggle();
     });
 
+    
+
 
     $("body").on("click", ".pagamento", function() {
-
+        let clienteretirando = $(this).closest(".cliente");
         $("#retirada").show();
+        $("#textosaida").text("Digite a numero de pareclas pagas de " + clienteretirando.find(".nome").text())
+
 
     });
 
     $("#retirar").click(retirar);
 
-    function retirar(){
-
+    function retirar() {
+        // Utilizando $(this) para referenciar o botão #retirar que foi clicado
         let clienteretirando = $(this).closest(".cliente");
+    
+        // Obter o número de parcelas pagas do campo de entrada #pagamentos
+        let parcelasPagas = parseInt($("#pagamentos").val());
 
-        let parcelasPagas = $("#pagamentos").parseInt($("#pagamentos").val()) 
-        let parcelaAtual = clienteretirando.find(".valorparcela").text()
-        let numeroDeParcelasAtual = clienteretirando.find(".numeroparcelas").text()
-        let totalatual = clienteEditando.find(".total").text()
-
-        let novonumerodeparcelas = parcelasPagas - numeroDeParcelasAtual
-        let  valorTotalAPagar = novonumerode
-
+        alert(parcelasPagas)
+    
+        // Obter o valor da parcela atual e o número de parcelas atual do cliente
+        let parcelaAtual = parseFloat(clienteretirando.find(".valorparcela").text()); // Usando parseFloat para lidar com valores decimais
+        let numeroDeParcelasAtual = parseInt(clienteretirando.find(".numeroparcelas").text());
+    
+        // Obter o total atual do cliente
+        let totalAtual = parseFloat(clienteretirando.find(".total").text()); // Usando parseFloat para lidar com valores decimais
+    
+        // Calcular o novo número de parcelas restantes e o novo total a pagar
+        let novoNumeroDeParcelas = numeroDeParcelasAtual - parcelasPagas;
+        let valorTotalAPagar = totalAtual - (parcelaAtual * parcelasPagas);
+    
+        // Atualizar o número de parcelas restantes e o total a pagar no HTML
+        clienteretirando.find(".numeroparcelas").text(novoNumeroDeParcelas);
+        clienteretirando.find(".total").text(valorTotalAPagar);
     }
+    
 
 
 
@@ -44,7 +60,7 @@ $(document).ready(function() {
         $("#novoendereco").val(clienteEditando.find(".endereco").text());
         $("#novovalor").val(clienteEditando.find(".valor").text());
         $("#novotaxa").val(clienteEditando.find(".juros").text());
-        $("#novoparcelas").val(clienteEditando.find(".qtdparcelas").text());
+        $("#novoqtdparcelas").val(clienteEditando.find(".numeroparcelas").text());
 
         // Mostra o formulário de edição
         $("#alteracao").show();
@@ -126,7 +142,9 @@ $(document).ready(function() {
         // Criar novo elemento div para representar o cliente
         const novoCliente = $("<div>").addClass("cliente");
 
-        // Adicionar elementos HTML com base nos dados do cliente
+        
+        $("<button>").text("Editar cliente").addClass("editar").appendTo(novoCliente);
+
         $("<h2>").text(cliente.nome).addClass("nome").appendTo(novoCliente);
 
         $("<p>").text("Endereço:  " + cliente.endereco).addClass("endereco").appendTo(novoCliente);
@@ -153,7 +171,8 @@ $(document).ready(function() {
         $("<p>").text("Total a Pagar:  " + valorTotal.toFixed(2)).addClass("total").appendTo(novoCliente);
 
 
-        $("<button>").text("Editar cliente").addClass("editar").appendTo(novoCliente);
+
+        $("<button>").text("Pagamento").addClass("pagamento").appendTo(novoCliente);
 
         $("body").append(novoCliente);
     }

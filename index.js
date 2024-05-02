@@ -12,17 +12,10 @@ $(document).ready(function() {
         let clienteretirando = $(this).closest(".cliente");
         $("#retirada").show();
         $("#textosaida").text("Digite a numero de pareclas pagas de " + clienteretirando.find(".nome").text())
-
-
     });
 
-    $("#retirar").click(function(event) {
-        event.preventDefault();
-        
     
-       
-        $("#retirada").hide();
-    });
+   
 
 
     let clienteEditando = null; // Variável para armazenar o cliente sendo editado

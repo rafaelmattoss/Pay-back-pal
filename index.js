@@ -16,35 +16,13 @@ $(document).ready(function() {
 
     });
 
-    $("#retirar").click(retirar);
-
-    function retirar() {
-        // Utilizando $(this) para referenciar o botão #retirar que foi clicado
-        let clienteretirando = $(this).closest(".cliente");
+    $("#retirar").click(function(event) {
+        event.preventDefault();
+        
     
-        // Obter o número de parcelas pagas do campo de entrada #pagamentos
-        let parcelasPagas = parseInt($("#pagamentos").val());
-
-        alert(parcelasPagas)
-    
-        // Obter o valor da parcela atual e o número de parcelas atual do cliente
-        let parcelaAtual = parseFloat(clienteretirando.find(".valorparcela").text()); // Usando parseFloat para lidar com valores decimais
-        let numeroDeParcelasAtual = parseInt(clienteretirando.find(".numeroparcelas").text());
-    
-        // Obter o total atual do cliente
-        let totalAtual = parseFloat(clienteretirando.find(".total").text()); // Usando parseFloat para lidar com valores decimais
-    
-        // Calcular o novo número de parcelas restantes e o novo total a pagar
-        let novoNumeroDeParcelas = numeroDeParcelasAtual - parcelasPagas;
-        let valorTotalAPagar = totalAtual - (parcelaAtual * parcelasPagas);
-    
-        // Atualizar o número de parcelas restantes e o total a pagar no HTML
-        clienteretirando.find(".numeroparcelas").text(novoNumeroDeParcelas);
-        clienteretirando.find(".total").text(valorTotalAPagar);
-    }
-    
-
-
+       
+        $("#retirada").hide();
+    });
 
 
     let clienteEditando = null; // Variável para armazenar o cliente sendo editado
@@ -169,7 +147,6 @@ $(document).ready(function() {
 
 
         $("<p>").text("Total a Pagar:  " + valorTotal.toFixed(2)).addClass("total").appendTo(novoCliente);
-
 
 
         $("<button>").text("Pagamento").addClass("pagamento").appendTo(novoCliente);

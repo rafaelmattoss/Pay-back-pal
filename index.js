@@ -7,22 +7,29 @@ $(document).ready(function() {
 
     
 
-
-    $("body").on("click", ".pagamento", function() {
+    $("#listaclientes").on("click", ".pagamento", function() {
         let clienteretirando = $(this).closest(".cliente");
         $("#retirada").show();
-        $("#textosaida").text("Digite a numero de pareclas pagas de " + clienteretirando.find(".nome").text())
+        $("#textosaida").text("Digite o número de parcelas pagas de " + clienteretirando.find(".nome").text());
     });
 
-    
-   
 
+
+    $("#listaclientes").on("click", "#retirar", function() {
+        let clienteretirando = $(this).closest(".cliente");
+        
+       let numeroParcelasAtual = clienteretirando.find(".numeroparcelas").text()
+
+       alert(numeroParcelasAtual)
+
+    });
+    
 
     let clienteEditando = null; // Variável para armazenar o cliente sendo editado
 
     // Evento para mostrar o formulário de edição ao clicar no botão "Editar Cliente"
     $("body").on("click", ".editar", function() {
-        // Identifica o cliente sendo editado
+      
         clienteEditando = $(this).closest(".cliente");
         
         // Preenche o formulário de edição com os dados do cliente
@@ -41,31 +48,32 @@ $(document).ready(function() {
    
     $("#salvar").click(function(event) {
         event.preventDefault();
-
-
-        const novoNome  = $("#novonome").val();
-        const novotelefone  = $("#novotelefone").val();
+    
+        const novoNome = $("#novonome").val();
+        const novoTelefone = $("#novotelefone").val();
         const novoEndereco = $("#novoendereco").val();
-        const novoValor = $("#novovalor").val();
-        const novoTaxa = $("#novotaxa").val();
-        const novoParcelas =  $("#novoqtdparcelas").val();
-
-        const taxa = novoTaxa / 100
-        const novoTotal = novoValor * (taxa + 1);
-        const novoValorParcela = novoTotal / novoParcelas
-
-        clienteEditando.find(".nome").text(novoNome)
-        clienteEditando.find(".telefone").val(novotelefone)
-        clienteEditando.find(".endereco").val(novoEndereco)
-        clienteEditando.find(".valor").val(novoValor)
-        clienteEditando.find(".parcela").val(novoValorParcela)
-        clienteEditando.find(".qtdparcelas").val(novoParcelas)
-        clienteEditando.find(".valortotal").val(novoTotal)
-        clienteEditando.find(".juros").val(novoTaxa + "%")
-
+        const novoValor = parseFloat($("#novovalor").val());
+        const novoTaxa = parseFloat($("#novotaxa").val());
+        const novoParcelas = parseInt($("#novoqtdparcelas").val());
+    
+        const taxaDecimal = novoTaxa / 100;
+        const novoTotal = novoValor * (1 + taxaDecimal);
+        const novoValorParcela = novoTotal / novoParcelas;
+    
+        // Atualizar os elementos HTML do cliente sendo editado
+        clienteEditando.find(".nome").text(novoNome);
+        clienteEditando.find(".telefone").text(novoTelefone);
+        clienteEditando.find(".endereco").text(novoEndereco);
+        clienteEditando.find(".valor").text(novoValor);
+        clienteEditando.find(".valorparcela").text(novoValorParcela.toFixed(2));
+        clienteEditando.find(".numeroparcelas").text(novoParcelas);
+        clienteEditando.find(".total").text(novoTotal.toFixed(2));
+        clienteEditando.find(".juros").text(novoTaxa + "%");
+    
+        // Ocultar o formulário de edição após salvar
         $("#alteracao").hide();
-        //colocar cada um no seu lugar com as alterações
     });
+    
     
   
     $("#adcliente").click(function(event) {
@@ -144,7 +152,7 @@ $(document).ready(function() {
 
         $("<button>").text("Pagamento").addClass("pagamento").appendTo(novoCliente);
 
-        $("body").append(novoCliente);
+        $("#listaclientes").append(novoCliente);
     }
 
     // Função para limpar os campos do formulário de adição após adicionar um cliente

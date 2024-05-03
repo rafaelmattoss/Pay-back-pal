@@ -4,27 +4,7 @@ $(document).ready(function() {
     $("#add").click(function() {
         $("#form-adiciona").toggle();
     });
-
     
-
-    $("#listaclientes").on("click", ".pagamento", function() {
-        let clienteretirando = $(this).closest(".cliente");
-        $("#retirada").show();
-        $("#textosaida").text("Digite o número de parcelas pagas de " + clienteretirando.find(".nome").text());
-    });
-
-
-
-    $("#listaclientes").on("click", "#retirar", function() {
-        let clienteretirando = $(this).closest(".cliente");
-        
-       let numeroParcelasAtual = clienteretirando.find(".numeroparcelas").text()
-
-       alert(numeroParcelasAtual)
-
-    });
-    
-
     let clienteEditando = null; // Variável para armazenar o cliente sendo editado
 
     // Evento para mostrar o formulário de edição ao clicar no botão "Editar Cliente"
@@ -150,7 +130,9 @@ $(document).ready(function() {
         $("<p>").text("Total a Pagar:  " + valorTotal.toFixed(2)).addClass("total").appendTo(novoCliente);
 
 
-        $("<button>").text("Pagamento").addClass("pagamento").appendTo(novoCliente);
+        let botaoPagamento = $("<button>").text("Pagamento").attr("id", "pagamento");
+
+        botaoPagamento.appendTo(novoCliente);
 
         $("#listaclientes").append(novoCliente);
     }
@@ -160,4 +142,23 @@ $(document).ready(function() {
         $("#adnome, #adtelefone, #adendereco, #advalor, #adtaxa, #adparcelas").val("");
     }
 
+    $("#listaclientes").on("click", "#pagamento", function() {
+        $("#retirada").show();
+    
+        let clienteRetirando = $(this).closest(".cliente");
+
+        $("#textosaida").text("Digite o valor de parcelas pagas por " + clienteRetirando.find(".nome").text());
+
+        
+    });
+
+
+    $("#listaclientes").on("click", "#retirar", function() {
+        let clienteRetirando = $(this).closest(".cliente");
+        alert(clienteRetirando.find(".nome").text().trim());
+    });
+
+
+    
+    
 });

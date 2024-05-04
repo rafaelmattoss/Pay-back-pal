@@ -77,9 +77,33 @@
         }
 
         $("#listaclientes").on("click", ".btosaida", function() {
-            const clienteNome = $(this).closest(".cliente").find(".nome").text();
+            const cliente = $(this).closest(".cliente");
 
-            alert(clienteNome);  
+            //pega o valor de texto dos campos necessarios
+            const parcelastext = cliente.find(".numeroparcelas").text()
+            const valorTotalText = cliente.find(".total").text()
+            const valorParcelatext = cliente.find(".valorparcela").text()
+
+            // extrai somente os numeros dos campos de textos
+
+            const numerosParcelas = parcelastext.match(/\d+/g);
+            const valorTotal = valorTotalText.match(/\d+/g);
+            const valorparcela = valorParcelatext.match(/\d+/g);
+
+
+            const parcelasPagas = $("#pagamentos").val()
+
+            //manupipula os dados
+            const novaParcela = numerosParcelas - parcelasPagas
+            const atualizaValortotal = parcelasPagas * valorparcela
+            const novoValorTotal = valorTotal - atualizaValortotal
+            
+
+
+
+            cliente.find(".numeroparcelas").text("Numero de Parcelas: " + novaParcela)
+            cliente.find(".total").text("Total a Pagar: " + novoValorTotal)
+           
         });
     });
     

@@ -1,5 +1,4 @@
-$(document).ready(function() {
-    
+ 
     
     $("#add").click(function() {
         $("#form-adiciona").toggle();
@@ -153,12 +152,14 @@ $(document).ready(function() {
     });
 
 
-    $("#listaclientes").on("click", "#retirar", function() {
-        let clienteRetirando = $(this).closest(".cliente");
-        alert(clienteRetirando.find(".nome").text().trim());
+    $("#retirada").on("click", "#retirar", function() {
+        
+        alert("oi");
     });
+    
 
 
     
     
-});
+
+

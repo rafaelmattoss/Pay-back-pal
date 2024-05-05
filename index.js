@@ -78,34 +78,51 @@
 
         $("#listaclientes").on("click", ".btosaida", function() {
             const cliente = $(this).closest(".cliente");
-
-            //pega o valor de texto dos campos necessarios
-            const parcelastext = cliente.find(".numeroparcelas").text()
-            const valorTotalText = cliente.find(".total").text()
-            const valorParcelatext = cliente.find(".valorparcela").text()
-
-            // extrai somente os numeros dos campos de textos
-
-            const numerosParcelas = parcelastext.match(/\d+/g);
-            const valorTotal = valorTotalText.match(/\d+/g);
-            const valorparcela = valorParcelatext.match(/\d+/g);
-
-
-            const parcelasPagas = $("#pagamentos").val()
-
-            //manupipula os dados
-            const novaParcela = numerosParcelas - parcelasPagas
-            const atualizaValortotal = parcelasPagas * valorparcela
-            const novoValorTotal = valorTotal - atualizaValortotal
-            
-
-
-
-            cliente.find(".numeroparcelas").text("Numero de Parcelas: " + novaParcela)
-            cliente.find(".total").text("Total a Pagar: " + novoValorTotal)
-           
+    
+            // Pegar o texto dos campos necessários
+            const parcelastext = cliente.find(".numeroparcelas").text();
+            const valorTotalText = cliente.find(".total").text();
+            const valorParcelatext = cliente.find(".valorparcela").text();
+    
+            // Extrair somente os números dos campos de texto usando expressão regular
+            const numerosParcelas = parseInt(parcelastext.match(/\d+/)[0]);
+            const valorTotal = parseFloat(valorTotalText.match(/\d+(\.\d+)?/)[0]);
+            const valorParcela = parseFloat(valorParcelatext.match(/\d+(\.\d+)?/)[0]);
+    
+            // Obter o valor de parcelas pagas do campo de entrada
+            const parcelasPagas = parseFloat(cliente.find("#pagamentos").val());
+    
+            // Manipular os dados
+            const novaParcela = numerosParcelas - parcelasPagas;
+            const atualizaValorTotal = parcelasPagas * valorParcela;
+            const novoValorTotal = valorTotal - atualizaValorTotal;
+    
+            // Atualizar os valores do cliente
+            cliente.find(".numeroparcelas").text("Número de Parcelas: " + novaParcela);
+            cliente.find(".total").text("Total a Pagar: " + novoValorTotal.toFixed(2));
+    
+            // Limpar o campo de entrada 'pagamentos'
+            cliente.find("#pagamentos").val("");
         });
-    });
+
+        $("#filtrar").on("input", function() {
+            const filtro = $(this).val().toLowerCase(); // Obter o texto digitado no campo de filtro em minúsculas
+    
+            // Iterar sobre cada cliente na lista
+            $(".cliente").each(function() {
+                const nomeCliente = $(this).find(".nome").text().toLowerCase(); // Obter o nome do cliente em minúsculas
+    
+                // Verificar se o nome do cliente corresponde ao filtro
+                if (nomeCliente.includes(filtro)) {
+                    $(this).show(); // Exibir o cliente se corresponder ao filtro
+                } else {
+                    $(this).hide(); // Ocultar o cliente se não corresponder ao filtro
+                }
+            });
+        });
+        
+
+    })        
     
 
     

@@ -14,6 +14,10 @@
                 limparCampos();
             }
         });
+
+        
+    
+
     
         // Função para validar os campos do formulário de adição
         function validarCliente() {
